@@ -20,6 +20,12 @@
         left: 0;
         top: 0;
       }
+
+      #skills {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+      }
     </style>
 
   </head>
@@ -37,6 +43,8 @@
     <br />
     <button onclick="left()">left</button>
     <button onclick="right()">right</button>
+
+    <div id="skills"></div>
 
     <script>
         var host = window.document.location.host.replace(/:.*/, '');
@@ -65,6 +73,19 @@
 
                 players[sessionId] = dom;
                 document.body.appendChild(dom);
+
+                var skillContainer = document.querySelector("#skills");
+                skillContainer.innerHTML = player.skills.toArray();
+
+                player.skills.onAdd = (skill) => {
+                    console.log("add", skill);
+                    skillContainer.innerHTML = player.skills.toArray();
+                };
+
+                player.skills.onRemove = (skill) => {
+                    console.log("remove", skill);
+                    skillContainer.innerHTML = player.skills.toArray();
+                };
             }
 
             room.state.players.onRemove = function (player, sessionId) {
